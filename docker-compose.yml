@@ -1,0 +1,15 @@
+
+services:
+  projecta:
+    build:
+      context: ./projectA
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  projectb:
+    build:
+      context: ./projectB
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
