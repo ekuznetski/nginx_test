@@ -12,19 +12,16 @@
 
 <script>
     function sendPostRequest() {
-        fetch('http://localhost:8081/set-cookie', {
-            method: 'POST',
-            headers: {
-                'test123': 'test123',
-                'Content-Type': 'application/json'
-            },
+        // Отправляем запрос на серверный маршрут /proxy-set-cookie в NGINX ProjectA
+        fetch('http://localhost:8080/proxy-set-cookie', {
+            method: 'GET', // Теперь используем GET, чтобы запросить прокси-запрос из NGINX
         })
             .then(response => {
                 if (response.ok) {
-                    // Если ответ успешный, выполняем редирект на приложение B
+                    // Перенаправляем пользователя на приложение B после успешного запроса
                     window.location.href = 'http://localhost:8081';
                 } else {
-                    console.error('Failed to set cookie:', response.statusText);
+                    console.error('Failed to proxy request:', response.statusText);
                 }
             })
             .catch(error => console.error('Error:', error));
