@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project B</title>
 </head>
 <body>
-<h1>Welcome to Project B</h1>
-<p id="cookieDisplay">Your cookie: </p>
+<h1>Project B</h1>
+<iframe id="projectAFrame" src="http://localhost:8080" width="100%" height="400"></iframe>
+<div id="receivedMessage"></div>
 
 <script>
-    // Функция для получения и отображения куки 'auth'
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+    window.addEventListener('message', function(event) {
+        if (event.origin !== "http://localhost:8080") return;
 
-    // Отображаем куку на странице
-    document.getElementById('cookieDisplay').textContent = 'Your cookie: ' + getCookie('auth');
+        console.log("Received message:", event.data); // Добавьте для отладки
+        document.getElementById('receivedMessage').textContent = 'Получено сообщение: ' + event.data;
+    }, false);
 </script>
 </body>
 </html>

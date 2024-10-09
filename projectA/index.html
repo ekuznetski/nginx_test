@@ -2,30 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send POST Request</title>
+    <title>Project A</title>
 </head>
 <body>
-<h1>Send POST Request from A to B</h1>
-<button onclick="sendPostRequest()">Send POST with Header and Redirect</button>
+<h1>Project A</h1>
 
 <script>
-    function sendPostRequest() {
-        // Отправляем запрос на серверный маршрут /proxy-set-cookie в NGINX ProjectA
-        fetch('http://localhost:8080/proxy-set-cookie', {
-            method: 'GET', // Теперь используем GET, чтобы запросить прокси-запрос из NGINX
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Перенаправляем пользователя на приложение B после успешного запроса
-                    window.location.href = 'http://localhost:8081';
-                } else {
-                    console.error('Failed to proxy request:', response.statusText);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    // Функция для отправки куки
+    function sendCookies() {
+        var cookies = document.cookie;
+        window.parent.postMessage(cookies, "http://localhost:8081");
     }
+
+    // Отправляем куки сразу после загрузки страницы
+    window.onload = function() {
+        // Устанавливаем тестовый куки (если нужно)
+        document.cookie = "testCookie=Hello from Project A";
+
+        // Отправляем куки
+        sendCookies();
+    };
+
+    // Можно также настроить периодическую отправку куки, если они могут измениться
+    setInterval(sendCookies, 5000);  // Отправка каждые 5 секунд
 </script>
 </body>
 </html>
